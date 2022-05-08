@@ -1,4 +1,5 @@
 @file:Suppress("UnstableApiUsage")
+enableFeaturePreview("VERSION_CATALOGS")
 
 rootProject.name = "repackk"
 

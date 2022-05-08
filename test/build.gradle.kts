@@ -1,4 +1,4 @@
-plugins {
+1plugins {
     kotlin("jvm")
     id("com.google.devtools.ksp")
 }
@@ -8,7 +8,7 @@ dependencies {
 
     testImplementation(project(":annotations"))
     testImplementation(kotlin("test"))
-    testImplementation("com.google.truth:truth:1.1.3")
+    testImplementation(libs.google.truth)
 }
 
 sourceSets {

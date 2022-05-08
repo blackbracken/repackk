@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
+    implementation(libs.kotlin.reflect)
 }

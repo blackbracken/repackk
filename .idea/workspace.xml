@@ -4,30 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92906653-8c51-4b13-b12e-045457fb1939" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/annotations/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/annotations/src/main/kotlin/black/bracken/repackk/Repack.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processor/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/RepackProcessor.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/ext/KSPLoggerExt.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processor/src/main/resources/META-INF/services/com.google.devtools.ksp.processing.SymbolProcessorProvider" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/build.gradle.kts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/src/test/kotlin/black/bracken/repackk/SameParametersTest.kt" afterDir="false" />
+    <list default="true" id="92906653-8c51-4b13-b12e-045457fb1939" name="Changes" comment="initialize project">
+      <change afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/annotations/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/annotations/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processor/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/processor/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/test/build.gradle.kts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,7 +95,7 @@
       <command value="gradle jar" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.repackk [jar]">
+  <component name="RunManager" selected="Gradle.RepackTest.testSrcToDest">
     <configuration name="RepackTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -202,9 +186,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.RepackTest.testSrcToDest" />
         <item itemvalue="Gradle.repackk [jar]" />
         <item itemvalue="Gradle.repackk [build]" />
-        <item itemvalue="Gradle.RepackTest.testSrcToDest" />
         <item itemvalue="Gradle.RepackTest" />
       </list>
     </recent_temporary>
@@ -218,6 +202,14 @@
       <option name="presentableId" value="Default" />
       <updated>1651977477044</updated>
     </task>
+    <task id="LOCAL-00001" summary="initialize project">
+      <created>1652004047013</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1652004047013</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -230,5 +222,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initialize project" />
+    <option name="LAST_COMMIT_MESSAGE" value="initialize project" />
   </component>
 </project>
