@@ -18,29 +18,24 @@ class RepackVisitor(
             )
         }
 
-        val annotation: KSAnnotation = classDeclaration.annotations
-            .first { it.shortName.getShortName() == "Repack" }
+        val annotation: KSAnnotation = classDeclaration.annotations.first { it.shortName.getShortName() == "Repack" }
 
-        val fromFqcn = extractFqcn(annotation, "from")
-        val toFqcn = extractFqcn(annotation, "to")
+        val packageName = classDeclaration.packageName.asString()
+        val simpleName = classDeclaration.simpleName.asString()
 
-        val fromName = fromFqcn.split('.').last()
-        val toName = toFqcn.split('.').last()
+        val fromDeclaration = annotation.arguments.extractParamDeclaration("from")
+        val toDeclaration = annotation.arguments.extractParamDeclaration("to")
 
-        val fromDeclaration = annotation.arguments
-            .first { param -> param.name?.getShortName() == "from" }
-            .let { it.value as KSType }
-            .let { it.declaration as KSClassDeclaration }
+        val fromName = fromDeclaration.simpleName.asString()
+        val toName = toDeclaration.simpleName.asString()
 
-        val toDeclaration = annotation.arguments
-            .first { param -> param.name?.getShortName() == "to" }
-            .let { it.value as KSType }
-            .let { it.declaration as KSClassDeclaration }
+        val fromFqcn = "${fromDeclaration.packageName.asString()}.${fromName}"
+        val toFqcn = "${toDeclaration.packageName.asString()}.${toName}"
 
-        file += "package ${classDeclaration.packageName.asString()}\n"
+        file += "package $packageName\n"
         file += "\n"
 
-        file += "import ${classDeclaration.packageName.asString()}.${classDeclaration.simpleName.asString()}\n"
+        file += "import $packageName.$simpleName\n"
         file += "import $fromFqcn\n"
         file += "import $toFqcn\n"
 
@@ -48,35 +43,46 @@ class RepackVisitor(
 
         file += "fun $fromName.to$toName(): $toName = $toName(\n"
 
-        toDeclaration.getAllProperties().forEach { prop ->
-            val corresponded = fromDeclaration.getAllProperties()
-                .first { prop.simpleName.asString() == it.simpleName.asString() }
+        toDeclaration.getAllProperties()
+            .map { toProp ->
+                val toPropName = toProp.simpleName.asString()
 
-            if (prop.type.resolve() == corresponded.type.resolve()
-                && prop.typeParameters == corresponded.typeParameters
-            ) {
-                val propName = prop.simpleName.asString()
-                file += "  $propName = $propName,\n"
-            } else {
-                val mapper = classDeclaration.getAllFunctions()
-                    .first { func ->
-                        val repackParamAnnotation = func.annotations
-                            .firstOrNull { annotation -> annotation.shortName.asString() == "RepackParam" }
-                            ?: logger.fatal("Couldn't find mapper method to ${prop.simpleName.asString()}", prop)
+                val fromProp = fromDeclaration.getAllProperties()
+                    .firstOrNull { toPropName == it.simpleName.asString() }
+                    ?: logger.fatal("Failed to find parameter corresponding to $toPropName", toProp)
 
-                        repackParamAnnotation.arguments
-                            .all { arg ->
-                                when (arg.name?.getShortName()) {
-                                    "from" -> corresponded.simpleName.asString() == arg.value
-                                    "to" -> prop.simpleName.asString() == arg.value
-                                    else -> true
+                fromProp to toProp
+            }.forEach { (fromProp, toProp) ->
+                val fromPropName = fromProp.simpleName.asString()
+                val toPropName = toProp.simpleName.asString()
+
+                val matchesType = fromProp.type.resolve() == toProp.type.resolve()
+                        && fromProp.typeParameters == toProp.typeParameters
+
+                if (matchesType) {
+                    file += "  $fromPropName = $toPropName,\n"
+                } else {
+                    val mapper = classDeclaration.getAllFunctions()
+                        .firstOrNull { func ->
+                            val repackParamAnnotation = func.annotations
+                                .firstOrNull { annotation ->
+                                    annotation.shortName.asString() == "RepackParam"
                                 }
-                            }
-                    }
+                                ?: return@firstOrNull false
 
-                file += "  ${prop.simpleName.asString()} = ${classDeclaration.simpleName.asString()}.${mapper.simpleName.asString()}(${corresponded.simpleName.asString()}),\n"
+                            repackParamAnnotation.arguments
+                                .all { arg ->
+                                    when (arg.name?.getShortName()) {
+                                        "from" -> fromPropName == arg.value
+                                        "to" -> toPropName == arg.value
+                                        else -> true
+                                    }
+                                }
+                        } ?: logger.fatal("Failed to find mapper for ${toName}.${toPropName}}", classDeclaration)
+
+                    file += "  $toPropName = $simpleName.${mapper.simpleName.asString()}($fromPropName),\n"
+                }
             }
-        }
 
         file += ")\n"
     }
@@ -85,16 +91,9 @@ class RepackVisitor(
         this.write(str.toByteArray())
     }
 
-    private fun extractFqcn(annotation: KSAnnotation, parameterName: String): String {
-        val param = annotation.arguments
-            .firstOrNull { param -> param.name?.getShortName() == parameterName }
-            ?: logger.fatal("$parameterName parameter is not found", annotation)
-
-        val declaration = (param.value as? KSType)
-            ?.declaration
-            ?: logger.fatal("$parameterName parameter must be KSType", annotation)
-
-        return "${declaration.packageName.asString()}.${declaration.simpleName.asString()}"
-    }
+    private fun List<KSValueArgument>.extractParamDeclaration(name: String): KSClassDeclaration =
+        first { param -> param.name?.getShortName() == name }
+            .let { it.value as KSType }
+            .let { it.declaration as KSClassDeclaration }
 
 }

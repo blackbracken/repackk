@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92906653-8c51-4b13-b12e-045457fb1939" name="Changes" comment="support incremental build">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="92906653-8c51-4b13-b12e-045457fb1939" name="Changes" comment="show example">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/processor/RepackVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/processor/RepackVisitor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/test/kotlin/black/bracken/repackk/SameParametersTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/test/kotlin/black/bracken/repackk/SameParametersTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +93,7 @@
       <command value="gradle jar" />
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.DifferentParametersTest.testSrcToDest">
+  <component name="RunManager" selected="Gradle.SameParametersTest">
     <configuration name="DifferentParametersTest.testSrcToDest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -206,8 +207,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.DifferentParametersTest.testSrcToDest" />
         <item itemvalue="Gradle.SameParametersTest" />
+        <item itemvalue="Gradle.DifferentParametersTest.testSrcToDest" />
         <item itemvalue="Gradle.RepackTest.testSrcToDest" />
         <item itemvalue="Gradle.repackk [jar]" />
         <item itemvalue="Gradle.repackk [build]" />
@@ -258,7 +259,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652010944390</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="show example">
+      <created>1652011613284</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1652011613284</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -278,6 +286,7 @@
     <MESSAGE value="support optional mapper" />
     <MESSAGE value="move package" />
     <MESSAGE value="support incremental build" />
-    <option name="LAST_COMMIT_MESSAGE" value="support incremental build" />
+    <MESSAGE value="show example" />
+    <option name="LAST_COMMIT_MESSAGE" value="show example" />
   </component>
 </project>
