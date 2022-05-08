@@ -5,7 +5,6 @@ import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.*
 import com.google.devtools.ksp.validate
 import java.io.OutputStream
-import kotlin.reflect.full.memberProperties
 
 class RepackProcessor(
     val codeGenerator: CodeGenerator,
@@ -14,7 +13,6 @@ class RepackProcessor(
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
         val symbols = resolver.getSymbolsWithAnnotation("black.bracken.repackk.Repack")
-        val unvalidated = symbols.filter { !it.validate() }.toList()
 
         symbols
             .filter { it is KSClassDeclaration && it.validate() }
@@ -22,7 +20,7 @@ class RepackProcessor(
                 it.accept(RepackVisitor(logger, codeGenerator), Unit)
             }
 
-        return unvalidated
+        return symbols.filterNot { it.validate() }.toList()
     }
 
 }
@@ -54,11 +52,16 @@ class RepackVisitor(
             .let { it.value as KSType }
             .let { it.declaration as KSClassDeclaration }
 
+        val toDeclaration = annotation.arguments
+            .first { param -> param.name?.getShortName() == "to" }
+            .let { it.value as KSType }
+            .let { it.declaration as KSClassDeclaration }
+
         val file = codeGenerator
             .createNewFile(
                 dependencies = Dependencies(
                     false,
-                    ),
+                ),
                 packageName = classDeclaration.packageName.asString(),
                 fileName = "${classDeclaration.simpleName.asString()}Mapper"
             )
@@ -66,15 +69,48 @@ class RepackVisitor(
         file += "package ${classDeclaration.packageName.asString()}\n"
         file += "\n"
 
+        file += "import ${classDeclaration.packageName.asString()}.${classDeclaration.simpleName.asString()}\n"
         file += "import $fromFqcn\n"
         file += "import $toFqcn\n"
+
         file += "\n"
 
         file += "fun $fromName.to$toName(): $toName = $toName(\n"
-        fromDeclaration.getAllProperties().forEach { prop ->
-            val propName = prop.simpleName.asString()
-            file += "  $propName = $propName,\n"
+
+        toDeclaration.getAllProperties().forEach { prop ->
+            val corresponded = fromDeclaration.getAllProperties()
+                .first { prop.simpleName.asString() == it.simpleName.asString() }
+
+            if (prop.type.resolve() == corresponded.type.resolve()
+                && prop.typeParameters == corresponded.typeParameters
+            ) {
+                val propName = prop.simpleName.asString()
+                file += "  $propName = $propName,\n"
+            } else {
+                val mapper = classDeclaration.getAllFunctions()
+                    .first { func ->
+                        logger.warn(
+                            "${func.simpleName.asString()} | annotations = ${
+                                func.annotations.map { it.shortName.asString() }.toList()
+                            }"
+                        )
+                        val repackParamAnnotation = func.annotations
+                            .first { annotation -> annotation.shortName.asString() == "RepackParam" }
+
+                        repackParamAnnotation.arguments
+                            .all { arg ->
+                                when (arg.name?.getShortName()) {
+                                    "from" -> corresponded.simpleName.asString() == arg.value
+                                    "to" -> prop.simpleName.asString() == arg.value
+                                    else -> true
+                                }
+                            }
+                    }
+
+                file += "  ${prop.simpleName.asString()} = ${classDeclaration.simpleName.asString()}.${mapper.simpleName.asString()}(${corresponded.simpleName.asString()}),\n"
+            }
         }
+
         file += ")\n"
 
         file.close()

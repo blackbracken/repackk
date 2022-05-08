@@ -3,30 +3,30 @@ package black.bracken.repackk
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
-data class Src(
+data class SameSrc(
     val a: Int,
     val b: Int,
     val c: Int,
 )
 
-data class Dest(
+data class SameDest(
     val a: Int,
     val b: Int,
     val c: Int,
 )
 
 @Repack(
-    from = Src::class,
-    to = Dest::class,
+    from = SameSrc::class,
+    to = SameDest::class,
 )
-object SrcToDest
+object SameSrcToDest
 
-class RepackTest {
+class SameParametersTest {
 
     @Test
     fun testSrcToDest() {
-        val src = Src(10, 20, 30)
-        val dest = src.toDest()
+        val src = SameSrc(10, 20, 30)
+        val dest = src.toSameDest()
 
         assertThat(dest.a).isEqualTo(src.a)
         assertThat(dest.b).isEqualTo(src.b)
