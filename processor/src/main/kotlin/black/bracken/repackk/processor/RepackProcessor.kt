@@ -1,9 +1,6 @@
 package black.bracken.repackk.processor
 
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.processing.Resolver
-import com.google.devtools.ksp.processing.SymbolProcessor
+import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import com.google.devtools.ksp.validate
@@ -17,9 +14,22 @@ class RepackProcessor(
         val symbols = resolver.getSymbolsWithAnnotation("black.bracken.repackk.Repack")
 
         symbols
-            .filter { it is KSClassDeclaration && it.validate() }
+            .filter { it.validate() }
+            .filterIsInstance<KSClassDeclaration>()
             .forEach {
-                it.accept(RepackVisitor(logger, codeGenerator), Unit)
+                val file = codeGenerator
+                    .createNewFile(
+                        dependencies = Dependencies(
+                            false,
+                            *resolver.getAllFiles().toList().toTypedArray()
+                        ),
+                        packageName = it.packageName.asString(),
+                        fileName = "${it.simpleName.asString()}Mapper"
+                    )
+
+                it.accept(RepackVisitor(logger, file), Unit)
+
+                file.close()
             }
 
         return symbols.filterNot { it.validate() }.toList()

@@ -1,15 +1,13 @@
 package black.bracken.repackk.processor
 
 import black.bracken.repackk.ext.fatal
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.Dependencies
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.*
 import java.io.OutputStream
 
 class RepackVisitor(
     private val logger: KSPLogger,
-    private val codeGenerator: CodeGenerator,
+    private val file: OutputStream,
 ) : KSVisitorVoid() {
 
     override fun visitClassDeclaration(classDeclaration: KSClassDeclaration, data: Unit) {
@@ -38,15 +36,6 @@ class RepackVisitor(
             .first { param -> param.name?.getShortName() == "to" }
             .let { it.value as KSType }
             .let { it.declaration as KSClassDeclaration }
-
-        val file = codeGenerator
-            .createNewFile(
-                dependencies = Dependencies(
-                    false,
-                ),
-                packageName = classDeclaration.packageName.asString(),
-                fileName = "${classDeclaration.simpleName.asString()}Mapper"
-            )
 
         file += "package ${classDeclaration.packageName.asString()}\n"
         file += "\n"
@@ -90,8 +79,6 @@ class RepackVisitor(
         }
 
         file += ")\n"
-
-        file.close()
     }
 
     private operator fun OutputStream.plusAssign(str: String) {

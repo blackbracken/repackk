@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92906653-8c51-4b13-b12e-045457fb1939" name="Changes" comment="support optional mapper">
-      <change afterPath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/processor/RepackProcessor.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/processor/RepackVisitor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+    <list default="true" id="92906653-8c51-4b13-b12e-045457fb1939" name="Changes" comment="move package">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/RepackProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/RepackProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/processor/RepackProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/processor/RepackProcessor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/processor/RepackVisitor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/processor/src/main/kotlin/black/bracken/repackk/processor/RepackVisitor.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/test/kotlin/black/bracken/repackk/DifferentParametersTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/test/kotlin/black/bracken/repackk/DifferentParametersTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/test/kotlin/black/bracken/repackk/SameParametersTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/test/kotlin/black/bracken/repackk/SameParametersTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -247,7 +247,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652009447784</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="move package">
+      <created>1652010139486</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652010139486</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -265,6 +272,7 @@
     <MESSAGE value="initialize project" />
     <MESSAGE value="manage libs with bundle" />
     <MESSAGE value="support optional mapper" />
-    <option name="LAST_COMMIT_MESSAGE" value="support optional mapper" />
+    <MESSAGE value="move package" />
+    <option name="LAST_COMMIT_MESSAGE" value="move package" />
   </component>
 </project>

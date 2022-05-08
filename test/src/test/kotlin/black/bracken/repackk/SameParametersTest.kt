@@ -26,7 +26,7 @@ class SameParametersTest {
     @Test
     fun testSrcToDest() {
         val src = SameSrc(10, 20, 30)
-        val dest = src.toSameDest()
+        val dest = src
 
         assertThat(dest.a).isEqualTo(src.a)
         assertThat(dest.b).isEqualTo(src.b)
